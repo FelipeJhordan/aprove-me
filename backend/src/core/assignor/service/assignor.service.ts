@@ -1,7 +1,14 @@
+import { Inject } from '@nestjs/common';
 import { Assignor } from '../domain/assignor';
+import { IAssignorDatabaseRepository } from '../domain/interfaces/repositories/assignor-database-repository.interface';
 import { IAssignorService } from '../domain/interfaces/repositories/assignor-service.interface';
+import { IAssignorDatabaseRepositoryToken } from '../constants/ioc/injection-token';
 
 export class AssignorService implements IAssignorService {
+  constructor(
+    @Inject(IAssignorDatabaseRepositoryToken)
+    private repository: IAssignorDatabaseRepository,
+  ) {}
   listAssignors(): Promise<Assignor[]> {
     throw new Error('Method not implemented.');
   }
