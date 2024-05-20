@@ -1,4 +1,4 @@
-import { Body, Controller, Inject } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 
 import { BASE_PAYABLE_PATH } from '../constants/paths';
 import { AssignorDto } from './dtos/assignor.dto';
@@ -10,5 +10,9 @@ export class AssignorController {
   constructor(
     @Inject(IAssignorServiceToken) private service: IAssignorService,
   ) {}
-  public createAssignor(@Body() assignorDto: AssignorDto) {}
+
+  @Post()
+  public createAssignor(@Body() assignorDto: AssignorDto) {
+    return this.service.createAssignor(assignorDto);
+  }
 }

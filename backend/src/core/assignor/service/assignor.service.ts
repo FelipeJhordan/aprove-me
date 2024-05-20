@@ -16,7 +16,7 @@ export class AssignorService implements IAssignorService {
     throw new Error('Method not implemented.');
   }
   createAssignor(record: Partial<Assignor>): Promise<Assignor> {
-    throw new Error('Method not implemented.');
+    return this.repository.createAssignor(record);
   }
   updateAssignorById(id: string, record: Partial<Assignor>): Promise<Assignor> {
     throw new Error('Method not implemented.');
