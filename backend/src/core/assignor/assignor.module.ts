@@ -3,8 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AssignorEntity } from './infra/database/entities/assignor.entity';
 import { AssignorController } from './presentation/assignor.controller';
-import { IAssignorDatabaseRepositoryToken } from './constants/ioc/injection-token';
+import {
+  IAssignorDatabaseRepositoryToken,
+  IAssignorServiceToken,
+} from './constants/ioc/injection-token';
 import { AssignorRepository } from './infra/database/assignor.repository';
+import { AssignorService } from './service/assignor.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AssignorEntity])],
@@ -13,6 +17,10 @@ import { AssignorRepository } from './infra/database/assignor.repository';
     {
       provide: IAssignorDatabaseRepositoryToken,
       useClass: AssignorRepository,
+    },
+    {
+      provide: IAssignorServiceToken,
+      useClass: AssignorService,
     },
   ],
 })
