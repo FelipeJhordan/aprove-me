@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PayableModule } from './core/payable/payable.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getConfiguration } from './common/configuration/config-global';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDataSourceProvider } from './common/configuration/database/datasource';
+import { AssignorModule } from './core/assignor/assignor.module';
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { getDataSourceProvider } from './common/configuration/database/datasourc
       inject: [ConfigService],
     }),
     PayableModule,
+    AssignorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
