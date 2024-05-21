@@ -4,9 +4,11 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 import { AssignorEntity } from '../../../../../core/assignor/infra/database/entities/assignor.entity';
+import { Payable } from 'src/core/payable/domain/payable';
 
 @Entity('payable')
 export class PayableEntity {
@@ -28,7 +30,19 @@ export class PayableEntity {
   @Column({
     type: 'uuid',
   })
-  @ManyToOne(() => AssignorEntity, (assignor) => assignor.id)
+  @ManyToOne(() => AssignorEntity, (assignor) => assignor.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   assignor: string;
+
+  @DeleteDateColumn({
+    select: false,
+  })
+  public deletedAt: Date;
+
+  static toDomain(databaseEntity: PayableEntity): Payable {
+    const { id, assignor, emissionDate, value } = databaseEntity;
+    return new Payable(id, value, emissionDate, assignor);
+  }
 }
