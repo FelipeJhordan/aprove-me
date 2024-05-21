@@ -1,10 +1,6 @@
 import { IsDateString, IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 
-export class PayableDto {
-  @IsNotEmpty()
-  @IsUUID()
-  id: string;
-
+export class CreatePayableDto {
   @IsNotEmpty()
   @IsNumber()
   value: number;
