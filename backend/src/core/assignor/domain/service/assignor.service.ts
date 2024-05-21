@@ -5,18 +5,22 @@ import { ServiceException } from 'src/common/entities/service-exception';
 import { ErrorType } from '../../../../common/types/error-types.enum';
 import { Inject } from '@nestjs/common';
 import { IAssignorDatabaseRepositoryToken } from '../../constants/ioc/injection-token';
+import { IPayableDatabaseRepositoryToken } from 'src/core/payable/constants/ioc/injection-token';
+import { IPayableDatabaseRepository } from 'src/core/payable/domain/interfaces/payable-database-repository.interface';
 
 export class AssignorService implements IAssignorService {
   constructor(
     @Inject(IAssignorDatabaseRepositoryToken)
-    private repository: IAssignorDatabaseRepository,
+    private assignorRepository: IAssignorDatabaseRepository,
+    @Inject(IPayableDatabaseRepositoryToken)
+    private payableRepository: IPayableDatabaseRepository,
   ) {}
 
   listAssignors(): Promise<Assignor[]> {
-    return this.repository.listAssignors();
+    return this.assignorRepository.listAssignors();
   }
   async getAssignorById(id: string): Promise<Assignor> {
-    const assignorByDb = await this.repository.getAssignorById(id);
+    const assignorByDb = await this.assignorRepository.getAssignorById(id);
     if (!assignorByDb) {
       throw new ServiceException(
         'Cedente não encontrado',
@@ -28,7 +32,7 @@ export class AssignorService implements IAssignorService {
   }
   async createAssignor(record: Partial<Assignor>): Promise<Assignor> {
     const hasAssignorWithSameDocument =
-      await this.repository.getAssignorByDocument(record.document);
+      await this.assignorRepository.getAssignorByDocument(record.document);
     if (hasAssignorWithSameDocument) {
       throw new ServiceException(
         'Documento já cadastrado.',
@@ -36,7 +40,7 @@ export class AssignorService implements IAssignorService {
       );
     }
 
-    return this.repository.createAssignor(record);
+    return this.assignorRepository.createAssignor(record);
   }
   async updateAssignorById(
     id: string,
@@ -44,7 +48,7 @@ export class AssignorService implements IAssignorService {
   ): Promise<null> {
     await this.getAssignorById(id);
     const hasAssignorWithSameDocument =
-      await this.repository.getAssignorByDocument(record.document, id);
+      await this.assignorRepository.getAssignorByDocument(record.document, id);
 
     if (hasAssignorWithSameDocument && record.document) {
       throw new ServiceException(
@@ -52,11 +56,17 @@ export class AssignorService implements IAssignorService {
         ErrorType.BAD_REQUEST_ERROR,
       );
     }
-    return this.repository.updateAssignorById(id, record);
+    return this.assignorRepository.updateAssignorById(id, record);
   }
+
   async deleteAssignorById(id: string): Promise<null> {
     await this.getAssignorById(id);
 
-    return this.repository.deleteAssignorById(id);
+    await Promise.all([
+      this.payableRepository.deletePayablesByAssignor(id),
+      this.assignorRepository.deleteAssignorById(id),
+    ]);
+
+    return null;
   }
 }

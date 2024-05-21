@@ -30,9 +30,7 @@ export class PayableEntity {
   @Column({
     type: 'uuid',
   })
-  @ManyToOne(() => AssignorEntity, (assignor) => assignor.id, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => AssignorEntity, (assignor) => assignor.id)
   @JoinColumn()
   assignor: string;
 

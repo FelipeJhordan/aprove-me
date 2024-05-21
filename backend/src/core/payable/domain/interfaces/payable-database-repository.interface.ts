@@ -6,4 +6,5 @@ export interface IPayableDatabaseRepository {
   createPayable(record: Partial<Payable>): Promise<Payable>;
   updatePayableById(id: string, payable: Partial<Payable>): Promise<null>;
   deletePayableById(id: string): Promise<null>;
+  deletePayablesByAssignor(assignorId: string): Promise<null>;
 }

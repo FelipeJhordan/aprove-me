@@ -10,6 +10,7 @@ export class PayableRepository implements IPayableDatabaseRepository {
     @InjectRepository(PayableEntity)
     private payableRepository: Repository<PayableEntity>,
   ) {}
+
   listPayables(page: number = 1, pageSize: number = 10): Promise<Payable[]> {
     return this.payableRepository.find({
       skip: (page - 1) * (pageSize + 1),
@@ -46,6 +47,14 @@ export class PayableRepository implements IPayableDatabaseRepository {
   async deletePayableById(id: string): Promise<null> {
     await this.payableRepository.softDelete({
       id,
+    });
+
+    return;
+  }
+
+  async deletePayablesByAssignor(assignorId: string): Promise<null> {
+    await this.payableRepository.softDelete({
+      assignor: assignorId,
     });
 
     return;
