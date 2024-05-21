@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import {
   MAX_DOCUMENT_LENGTH,
@@ -6,6 +11,7 @@ import {
   MAX_NAME_LENGTH,
   MAX_PHONE_LENGTH,
 } from '../../../constants/max-length-fields.constants';
+import { Assignor } from 'src/core/assignor/domain/assignor';
 
 @Entity('assignor')
 export class AssignorEntity {
@@ -31,4 +37,15 @@ export class AssignorEntity {
     length: MAX_NAME_LENGTH,
   })
   name: string;
+
+  @DeleteDateColumn({
+    select: false,
+  })
+  deletedAt: Date;
+
+  static toDomain(databaseEntity: AssignorEntity): Assignor {
+    const { id, document, email, name, phone } = databaseEntity;
+
+    return new Assignor(id, document, email, phone, name);
+  }
 }
