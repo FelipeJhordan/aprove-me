@@ -23,7 +23,7 @@ export class GeneralErrorFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = this.makeStatus(exception);
 
-    this.logger.error(exception);
+    this.logger.error(exception.stack, exception);
 
     const httpMessageOutput = {
       alias: this.makeAlias(exception),
@@ -140,7 +140,7 @@ export class GeneralErrorFilter implements ExceptionFilter {
   public makeStackTrace(
     exception: HttpException | ServiceException | Error,
   ): string | undefined {
-    if (process.env?.APPLICATION_ENV === 'development') {
+    if (process.env?.NODE_ENV === 'development') {
       return exception.stack;
     }
     return undefined;
