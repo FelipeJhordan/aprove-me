@@ -1,1 +1,1 @@
-export const BASE_PAYABLE_PATH = 'assignor';
+export const BASE_ASSIGNOR_PATH = 'assignor';

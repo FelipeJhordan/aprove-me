@@ -8,6 +8,7 @@ import { cpf, cnpj } from 'cpf-cnpj-validator';
 
 @ValidatorConstraint({ async: false })
 export class IsDocumentConstraint implements ValidatorConstraintInterface {
+  property = 'document';
   validate(document: any) {
     return (
       typeof document === 'string' &&
@@ -16,7 +17,7 @@ export class IsDocumentConstraint implements ValidatorConstraintInterface {
   }
 
   defaultMessage() {
-    return 'CPF inválido';
+    return `${this.property} Documento inválido`;
   }
 }
 
