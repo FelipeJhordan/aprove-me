@@ -24,5 +24,6 @@ import { AssignorModule } from '../assignor/assignor.module';
       useClass: PayableService,
     },
   ],
+  exports: [IPayableDatabaseRepositoryToken],
 })
 export class PayableModule {}
