@@ -8,7 +8,7 @@ import {
   IAssignorServiceToken,
 } from './constants/ioc/injection-token';
 import { AssignorRepository } from './infra/database/assignor.repository';
-import { AssignorService } from './service/assignor.service';
+import { AssignorService } from './domain/service/assignor.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AssignorEntity])],
@@ -23,5 +23,6 @@ import { AssignorService } from './service/assignor.service';
       useClass: AssignorService,
     },
   ],
+  exports: [IAssignorDatabaseRepositoryToken],
 })
 export class AssignorModule {}
