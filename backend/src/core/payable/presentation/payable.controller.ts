@@ -10,7 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { BASE_PAYABLE_PATH } from '../constants/paths';
+import { BASE_PAYABLE_PATH } from '../constants/paths.constants';
 import { PayableService } from '../domain/service/payable.service';
 import { IPayableServiceToken } from '../constants/ioc/injection-token';
 import { CreatePayableDto } from './dtos/create-payable.dto';

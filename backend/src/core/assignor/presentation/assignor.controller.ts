@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { BASE_ASSIGNOR_PATH } from '../constants/paths';
+import { BASE_ASSIGNOR_PATH } from '../constants/paths.constants';
 import { CreateAssignorDto } from './dtos/create-assignor.dto';
 import { IAssignorService } from '../domain/interfaces/assignor-service.interface';
 import { IAssignorServiceToken } from '../constants/ioc/injection-token';
