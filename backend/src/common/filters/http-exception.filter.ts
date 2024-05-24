@@ -7,7 +7,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { ServiceException } from '../entities/service-exception';
-import * as utils from '../utils';
+import * as utils from '../utils/http-utils';
 import { ExceptionErrorType } from './types/exception-error.type';
 import { ExceptionErrorAlias } from './types/exception-error-alias.type';
 

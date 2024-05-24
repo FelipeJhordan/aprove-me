@@ -10,9 +10,7 @@ import { IPayableDatabaseRepositoryToken } from '../../constants/ioc/injection-t
 
 export class PayableService implements IPayableService {
   constructor(
-    @Inject(IPayableDatabaseRepositoryToken)
     private payableRepository: IPayableDatabaseRepository,
-    @Inject(IAssignorDatabaseRepositoryToken)
     private assignorRepository: IAssignorDatabaseRepository,
   ) {}
 

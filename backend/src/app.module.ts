@@ -10,7 +10,7 @@ import { getDataSourceProvider } from './common/configuration/database/datasourc
 import { AssignorModule } from './core/assignor/assignor.module';
 import { DEFAULT_ENV } from './core/assignor/constants/sentings.constants';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -28,6 +28,7 @@ import { UserModule } from './user/user.module';
     }),
     AssignorModule,
     PayableModule,
+    CommonModule,
     AuthModule,
   ],
   controllers: [AppController],

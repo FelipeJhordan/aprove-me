@@ -10,6 +10,7 @@ import {
 import { PayableRepository } from './infra/database/payable.repository';
 import { PayableService } from './domain/service/payable.service';
 import { AssignorModule } from '../assignor/assignor.module';
+import { IAssignorDatabaseRepositoryToken } from '../assignor/constants/ioc/injection-token';
 
 @Module({
   controllers: [PayableController],
@@ -21,7 +22,11 @@ import { AssignorModule } from '../assignor/assignor.module';
     },
     {
       provide: IPayableServiceToken,
-      useClass: PayableService,
+      useFactory:  (
+      @Inject(IPayableDatabaseRepositoryToken)
+      private payableRepository: IPayableDatabaseRepository,
+      @Inject(IAssignorDatabaseRepositoryToken)
+      private assignorRepository: IAssignorDatabaseRepository) => {}
     },
   ],
   exports: [IPayableDatabaseRepositoryToken],
